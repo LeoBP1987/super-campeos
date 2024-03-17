@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>Campeões</title>
+</head>
+<body>    
+    <header class="cabecalho">
+        <img class="cabecalho__logo" src="{% static 'assets/logo/logo.png' %}" alt="Imagem logo">
+        <div>
+            <div class="busca__fundo">
+                <input class="busca__input" type="text" placeholder="O que você procura?">
+                <img class="busca__icone" src="{% static 'assets/icone/search.png' %}" alt="ícone de search">
+            </div>
+        </div>        
+    </header>
+    <main class="menu">
+        <div class="menu__item">
+            <section class="menu__navegacao">
+                <nav class="menu__navegacao__link">
+                    <a class="menu__link__links" href="index.html">
+                        <img class="menu__link__icone" src="{% static 'assets/icone/home.png' %}" alt="Icone Home">
+                        Home
+                    </a>
+                    <a class="menu__link__links" href="http://www.pudim.com.br">
+                        <img class="menu__link__icone" src="{% static 'assets/icone/bola.png' %}" alt="Icone Bola de Futebol">
+                        Times
+                    </a>
+                    <a class="menu__link__links" href="http://www.pudim.com.br">
+                        <img class="menu__link__icone" src="{% static 'assets/icone/trofeu.png' %}" alt="Icone Troféu">
+                        Campeonatos
+                    </a>
+                    <a class="menu__link__links" href="http://www.pudim.com.br">
+                        <img class="menu__link__icone" src="{% static 'assets/icone/chuteira.png' %}" alt="Icone chuteira">
+                        Categorias
+                    </a>
+                    <a class="menu__link__links" href="http://www.pudim.com.br">
+                        <img class="menu__link__icone" src="{% static 'assets/icone/classificacao.png' %}" alt="Icone Podio">
+                        Ranking
+                    </a>
+                </nav>
+            </section>
+        </div>  
+        <div class="menu__item">  
+            <img class="menu__banner" src="{% static 'assets/imagens/banner_futebol.png' %}" alt="Imagem Campo de Futebol">
+            <section class="galeria">
+                <div class="cards">
+                    <h2 class="cards__titulo">Navegue pela galeria</h2>
+                    <ul class="cards__lista">
+                        {% if cards %}
+                        {% for time in cards %}
+                        <li class="cards__card">
+                            <a href="{% url 'time' time.id %}">
+                                {% if time.escudo == null or time.escudo == '' %}
+                                    <img class="card__imagem" src="{% static 'assets/imagens/galeria/not-found.png' %}" alt="Imagem de Não Encontrado">
+                                {% else %}
+                                    <img class="card__imagem" src="{{time.escudo.url}}" alt="Escudo do Time">
+                                {% endif %}
+                            </a>
+                            <div class="card__info">
+                                <p class="card__titulo">{{time.nome}}</p>
+                                <p class="card__texto">{{time.local}}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                            <div class="card__info">
+                                    <p class="card__titulo">Não há Times cadastrados no momento</p>
+                            </div>
+                        {% endif %}
+                    </ul>
+                </div>
+            </section>
+        </div>         
+    </main>
+    <footer class="rodape">
+        <p>Desenvolvido por Leonardo Pereira</p>
+    </footer>
+</body>
+</html>
